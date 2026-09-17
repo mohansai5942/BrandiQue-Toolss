@@ -34,6 +34,7 @@ t('word-counter','Word & Character Counter','Utilities','Count words, characters
 t('case-converter','Case Converter','Utilities','Convert text to upper, lower, title, sentence, camel, snake and kebab case.',['Text'],'case'),
 t('color-converter','HEX, RGB & HSL Color Converter','Utilities','Convert CSS colors between HEX, RGB and HSL with an accessible live preview.',['HEX','RGB','HSL'],'color'),
 t('timestamp-converter','Unix Timestamp Converter','Utilities','Convert Unix seconds or milliseconds to local and UTC dates, or generate a timestamp.',['Unix','ISO 8601'],'timestamp'),
+t('qr-code-generator','QR Code Generator','Utilities','Generate standards-compliant QR codes locally with PNG and SVG downloads and symbol validation.',['Text','URL','PNG','SVG'],'qr'),
 t('percentage-calculator','Percentage Calculator','Calculators','Calculate percentages, percentage change and reverse percentages.',['Numbers'],'percentage'),
 t('emi-calculator','EMI Calculator','Calculators','Estimate monthly loan payments, total interest and repayment with a standard amortization formula.',['Currency values'],'emi'),
 t('discount-calculator','Discount Calculator','Calculators','Calculate final price, savings and combined discount/tax results.',['Currency values'],'discount'),
