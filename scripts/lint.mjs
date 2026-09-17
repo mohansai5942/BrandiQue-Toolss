@@ -1,3 +1,20 @@
-import {readFile} from 'node:fs/promises';
-const files=['src/tools.mjs','scripts/build.mjs','public/assets/app.js'];for(const f of files){const s=await readFile(f,'utf8');if(/eval\s*\(|new Function\s*\(/.test(s))throw new Error(`Unsafe dynamic code in ${f}`)}
-const {tools}=await import('../src/tools.mjs');if(new Set(tools.map(x=>x.slug)).size!==tools.length)throw new Error('Duplicate slugs');for(const t of tools)if(!t.description||t.description.length<45)throw new Error(`Thin description: ${t.slug}`);console.log(`Lint passed for ${tools.length} tools`);
+import {readdir,readFile} from 'node:fs/promises';
+import {spawnSync} from 'node:child_process';
+import {tools} from '../src/tools.mjs';
+
+const walk=async dir=>(await Promise.all((await readdir(dir,{withFileTypes:true})).map(async entry=>{
+ const path=`${dir}/${entry.name}`;
+ return entry.isDirectory()?walk(path):path;
+}))).flat();
+
+const sourceFiles=['src/tools.mjs','scripts/build.mjs','scripts/overrides.mjs',...(await walk('public/assets')).filter(path=>path.endsWith('.js'))];
+for(const file of sourceFiles){
+ const source=await readFile(file,'utf8');
+ if(/eval\s*\(|new Function\s*\(/.test(source))throw new Error(`Unsafe dynamic code in ${file}`);
+ const checked=spawnSync(process.execPath,['--check',file],{encoding:'utf8'});
+ if(checked.status!==0)throw new Error(`Syntax error in ${file}\n${checked.stderr||checked.stdout}`);
+}
+if(new Set(tools.map(tool=>tool.slug)).size!==tools.length)throw new Error('Duplicate slugs');
+if(new Set(tools.map(tool=>tool.name)).size!==tools.length)throw new Error('Duplicate tool titles');
+for(const tool of tools)if(!tool.description||tool.description.length<45)throw new Error(`Thin description: ${tool.slug}`);
+console.log(`Lint passed for ${tools.length} tools and ${sourceFiles.length} JavaScript modules`);
