@@ -6,8 +6,12 @@
   "trailingSlash": true,
   "rewrites": [
     {
-      "source": "/tools/image-resizer/:path*",
-      "destination": "/image-resizer.html"
+      "source": "/tools/image-resizer",
+      "destination": "/image-resizer"
+    },
+    {
+      "source": "/tools/image-resizer/",
+      "destination": "/image-resizer"
     }
   ],
   "headers": [
