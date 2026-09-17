@@ -4,16 +4,6 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": true,
-  "rewrites": [
-    {
-      "source": "/tools/image-resizer",
-      "destination": "/image-resizer"
-    },
-    {
-      "source": "/tools/image-resizer/",
-      "destination": "/image-resizer"
-    }
-  ],
   "headers": [
     {
       "source": "/assets/(.*)",
